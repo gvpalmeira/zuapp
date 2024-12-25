@@ -1,5 +1,8 @@
+"use client";
+
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
   DollarSign,
@@ -131,7 +134,8 @@ const navItems: NavItem[] = [
 export const SidebarNav: React.FC = () => {
   const { isExpanded } = useSidebarStore();
   const [expandedItems, setExpandedItems] = React.useState<string[]>([]);
-
+  const pathname = usePathname();
+  
   const toggleItem = (label: string) => {
     setExpandedItems((prev) =>
       prev.includes(label)
@@ -146,21 +150,19 @@ export const SidebarNav: React.FC = () => {
         {navItems.map((item) => (
           <li key={item.label} className="py-1">
             {item.path ? (
-              <NavLink
-                to={item.path}
-                className={({ isActive }) =>
-                  cn(
-                    'flex items-center gap-3 px-3 py-2 rounded-md text-gray-700',
-                    'hover:bg-gray-100 transition-colors duration-200',
-                    isActive && 'bg-primary/10 text-primary',
-                    !isExpanded && 'justify-center'
-                  )
-                }
+              <Link
+                href={item.path}
+                className={cn(
+                  'flex items-center gap-3 px-3 py-2 rounded-md text-gray-700',
+                  'hover:bg-gray-100 transition-colors duration-200',
+                  pathname === item.path && 'bg-primary/10 text-primary',
+                  !isExpanded && 'justify-center'
+                )}
                 title={!isExpanded ? item.label : undefined}
               >
                 {item.icon}
                 {isExpanded && <span>{item.label}</span>}
-              </NavLink>
+              </Link>
             ) : (
               <div className="space-y-1">
                 <button
@@ -189,19 +191,17 @@ export const SidebarNav: React.FC = () => {
                   <ul className="pl-8 space-y-0.5">
                     {item.children.map((child) => (
                       <li key={child.path}>
-                        <NavLink
-                          to={child.path}
-                          className={({ isActive }) =>
-                            cn(
-                              'group flex items-center py-2 px-3 rounded-md text-sm text-gray-700',
-                              'hover:bg-gray-100 hover:font-medium transition-all duration-200',
-                              isActive && 'bg-primary/10 text-primary font-medium'
-                            )
-                          }
+                        <Link
+                          href={child.path}
+                          className={cn(
+                            'group flex items-center py-2 px-3 rounded-md text-sm text-gray-700',
+                            'hover:bg-gray-100 hover:font-medium transition-all duration-200',
+                            pathname === child.path && 'bg-primary/10 text-primary font-medium'
+                          )}
                         >
                           <span className="w-1.5 h-1.5 rounded-full bg-gray-400 mr-2 group-hover:bg-primary transition-colors duration-200" />
                           {child.label}
-                        </NavLink>
+                        </Link>
                       </li>
                     ))}
                   </ul>

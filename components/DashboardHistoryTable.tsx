@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { CheckSquare, Square, Star, ExternalLink } from 'lucide-react';
 import type { SimulationHistoryEntry } from '@/types/history';

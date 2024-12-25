@@ -5,7 +5,7 @@ import { SearchParamProps, AccountsResponse, Account, User } from '@/types';
 import { DashboardMetrics } from '@/components/DashboardMetrics';
 import { DashboardCharts } from '@/components/DashboardCharts';
 import { DashboardQuickActions } from '@/components/DashboardQuickActions';
-import { DashboardHistoryTable } from '@/components/DashboardHistoryTable';
+//import { DashboardHistoryTable } from '@/components/DashboardHistoryTable';
 
 
 

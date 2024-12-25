@@ -1,3 +1,5 @@
+"use client";
+
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -24,7 +26,7 @@ const RightSidebar = ({ user }: RightSidebarProps) => {
         <div className="profile-banner" />
         <div className="profile">
           <div className="profile-img">
-            <span className="text-5xl font-bold text-blue-500">{user.nome_completo[0]}</span>
+            <span className="text-5xl font-bold text-blue-500">{user?.nome_completo?.[0] || 'Convidado'}</span>
           </div>
 
           <div className="profile-details">
@@ -40,7 +42,7 @@ const RightSidebar = ({ user }: RightSidebarProps) => {
 
       <section className="banks">
         <div className="flex w-full justify-between">
-          <h2 className="header-2">Meus Bancos</h2> {/* translated from My Banks */}
+          <h2 className="header-2">Meus Bancos</h2>
           <Link href="/" className="flex gap-2">
             <Image 
                src="/icons/plus.svg"
@@ -49,13 +51,13 @@ const RightSidebar = ({ user }: RightSidebarProps) => {
               alt="plus"
             />
             <h2 className="text-14 font-semibold text-gray-600">
-              Adicionar Banco {/* translated from Add Bank */}
+              Adicionar Banco
             </h2>
           </Link>
         </div>
               
         <div className="mt-10 flex flex-1 flex-col gap-6">
-          <h2 className="header-2">Top Categorias</h2> {/* translated from Top Categories */}
+          <h2 className="header-2">Top Categorias</h2>
 
           <div className='space-y-5'>
 
