@@ -1,7 +1,9 @@
 /* eslint-disable no-prototype-builtins */
 import { type ClassValue, clsx } from "clsx";
 import qs from "query-string";
+import { data } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
+import { z } from 'zod'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -135,9 +137,9 @@ export const authFormSchema = (type: string) => z.object({
       message: 'CPF inválido'
     }),
 
-  completeName: type === 'sign-in' ? z.string().optional() : z.string().min(3),
+  nome_completo: type === 'sign-in' ? z.string().optional() : z.string().min(3),
 
-  dateOfBirth: type === 'sign-in' ? z.string().optional() : z.string()
+  data_nascimento: type === 'sign-in' ? z.string().optional() : z.string()
     .min(1, 'Data de nascimento é obrigatória')
     .refine((value) => {
       const date = parseDate(value);
@@ -152,17 +154,17 @@ export const authFormSchema = (type: string) => z.object({
       return date ? isAtLeast18YearsOld(date) : false;
     }, 'Idade mínima de 18 anos'),
 
-  motherName: type === 'sign-in' ? z.string().optional() : z.string().min(3),
+  nome_mae: type === 'sign-in' ? z.string().optional() : z.string().min(3),
   
   accountType: type === 'sign-in' ? z.string().optional() : z.string().min(3),
 
-  companyCnpj: type === 'sign-in' ? z.string().optional() : z.string().min(3),
+  cnpj: type === 'sign-in' ? z.string().optional() : z.string().min(3),
 
-  companyName: type === 'sign-in' ? z.string().optional() : z.string().min(3), 
+  razao_social: type === 'sign-in' ? z.string().optional() : z.string().min(3), 
 
-  companyFantasyName: type === 'sign-in' ? z.string().optional() : z.string().min(3),
+  nome_fantasia: type === 'sign-in' ? z.string().optional() : z.string().min(3),
 
-  companyDateOfFoundation: type === 'sign-in' ? z.string().optional() : z.string()
+  data_abertura: type === 'sign-in' ? z.string().optional() : z.string()
     .min(1, 'Data de fundação é obrigatória')
     .refine((value) => {
       const date = parseDate(value);
@@ -173,36 +175,41 @@ export const authFormSchema = (type: string) => z.object({
       return date ? isValidDateValue(date) : false;
     }, 'Data não pode ser futura'),
 
-  companyPhone: type === 'sign-in' ? z.string().optional() : z.string() 
+  telefone_empresa: type === 'sign-in' ? z.string().optional() : z.string() 
     .refine(
       (value) => !value || value.replace(/\D/g, '').length === 11,
       'Telefone deve ter 11 dígitos'
     )
     .optional(),
 
-  companyEmail: type === 'sign-in' ? z.string().optional() : z.string() .min(1, 'E-mail é obrigatório') .email('Formato de e-mail inválido') 
+  email_empresa: type === 'sign-in' ? z.string().optional() : z.string() .min(1, 'E-mail é obrigatório') .email('Formato de e-mail inválido') 
     .refine(value => value.includes('@') && value.includes('.'), {
       message: 'E-mail inválido'
     }),
 
-  addressPostalCode: type === 'sign-in' ? z.string().optional() : z.string().min(3).max(6),
+  cep: type === 'sign-in' ? z.string().optional() : z.string().min(3).max(6),
 
-  addressName: type === 'sign-in' ? z.string().optional() : z.string().min(3),
+  logradouro: type === 'sign-in' ? z.string().optional() : z.string().min(3),
 
-  addressNumber: type === 'sign-in' ? z.string().optional() : z.string()
+  numero: type === 'sign-in' ? z.string().optional() : z.string()
     .min(1, 'Número é obrigatório')
     .refine(value => /^\d+$/.test(value), 'Apenas números são permitidos')
     .refine(value => value.length <= 6, 'Número muito longo'),
 
-  addressComplement: type === 'sign-in' ? z.string().optional() : z.string().max(50),
+  complemento: type === 'sign-in' ? z.string().optional() : z.string().max(50),
 
-  addressNeighborhood: type === 'sign-in' ? z.string().optional() : z.string().max(50),
+  bairro: type === 'sign-in' ? z.string().optional() : z.string().max(50),
 
-  addressCity: type === 'sign-in' ? z.string().optional() : z.string().max(50),
+  municipio: type === 'sign-in' ? z.string().optional() : z.string().max(50),
 
-  addressState: type === 'sign-in' ? z.string().optional() : z.string().min(2).max(2),
+  uf: type === 'sign-in' ? z.string().optional() : z.string().min(2).max(2),
 
 })
+
+export const CURRENCY_FORMAT = new Intl.NumberFormat('pt-BR', {
+  style: 'currency',
+  currency: 'BRL',
+});
 
 
 // INCLUSÕES ZUPAY
@@ -267,10 +274,10 @@ export const formatDateTime = (dateString: Date) => {
   };
 };
 
-export function formatAmount(amount: number): string {
-  const formatter = new Intl.NumberFormat("en-US", {
+export function formatAmount(amount: number): string {   //PODE SER SUBSTITUIDO POR CURRENCY_FORMAT ???
+  const formatter = new Intl.NumberFormat("pt-BR", {
     style: "currency",
-    currency: "USD",
+    currency: "BRL",
     minimumFractionDigits: 2,
   });
 
@@ -303,6 +310,7 @@ export function formUrlQuery({ params, key, value }: UrlQueryParams) {
   );
 }
 
+/*
 export function getAccountTypeColors(type: AccountTypes) {
   switch (type) {
     case "depository":
@@ -395,3 +403,4 @@ export const getTransactionStatus = (date: Date) => {
 
   return date > twoDaysAgo ? "Processing" : "Success";
 };
+*/

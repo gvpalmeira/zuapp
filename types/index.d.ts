@@ -84,10 +84,9 @@ declare type LoginUser = {
 
 declare type User = {
   $id: string;
-  email: string;
   userId: string;
-  dwollaCustomerUrl: string; //apagar
-  dwollaCustomerId: string; //apagar
+  //dwollaCustomerUrl: string; //apagar
+  //dwollaCustomerId: string; //apagar
   //STEP 1
   accountType: string;
   email: string;
@@ -110,8 +109,8 @@ declare type User = {
   razao_social: string;
   nome_fantasia: string;
   data_abertura: string;
-  telefone: string;
-  email: string;
+  telefone_empresa: string;
+  email_empresa: string;
   //CAMPOS OCULTOS - BUSCAR DA API E ENVIAR AO BANCO DE DADOS
   situacao: string; //ocultar no formulário
 //  atividade_principal; array; //ocultar no formulário
@@ -160,7 +159,7 @@ declare type User = {
 declare type NewUserParams = {
   userId: string;
   email: string;
-  name: string;
+  nome_completo: string; //alterado de name para nome_completo
   password: string;
 };
 
@@ -340,11 +339,6 @@ declare interface getBankByAccountIdProps {
   accountId: string;
 }
 
-
-*/
-
-
-
 declare type AccountTypes =
   | "poupança"
   | "crédito"
@@ -359,11 +353,11 @@ declare type CategoryCount = {
   count: number;
   totalCount: number;
 };
+*/
 
 declare type Receiver = {
   nome_completo: string;
 };
-
 
 declare interface HeaderBoxProps {
   type?: "title" | "greeting";
@@ -416,6 +410,7 @@ declare interface SiderbarProps {
   user: User;
 }
 
+/*
 declare interface RecentTransactionsProps {
   accounts: Account[];
   transactions: Transaction[];
@@ -434,7 +429,7 @@ declare interface CategoryBadgeProps {
 
 declare interface CategoryProps {
   category: CategoryCount;
-}
+}*/
 
 declare interface DoughnutChartProps {
   accounts: Account[];
